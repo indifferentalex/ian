@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  infinito: MyString
+  prima_persona_singolare: MyString
+  seconda_persona_singolare: MyString
+  terza_persona_singolare: MyString
+  prima_persona_plurale: MyString
+  seconda_persona_plurale: MyString
+  terza_persona_plurale: MyString
+  participio_passato: MyString
+  ausiliare: MyString
+
+two:
+  infinito: MyString
+  prima_persona_singolare: MyString
+  seconda_persona_singolare: MyString
+  terza_persona_singolare: MyString
+  prima_persona_plurale: MyString
+  seconda_persona_plurale: MyString
+  terza_persona_plurale: MyString
+  participio_passato: MyString
+  ausiliare: MyString

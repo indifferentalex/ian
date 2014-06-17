@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  concept_id: 
+  noun_id: 
+  definition: MyText
+
+two:
+  concept_id: 
+  noun_id: 
+  definition: MyText

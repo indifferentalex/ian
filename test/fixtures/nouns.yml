@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  definizione: MyString
+  genere: MyString
+  noun_id: 
+
+two:
+  nome: MyString
+  definizione: MyString
+  genere: MyString
+  noun_id: 

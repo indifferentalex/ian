@@ -32,10 +32,18 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+group :production do
+	gem 'unicorn'
+end
+
 gem 'rspec-rails', '~> 3.0.0'
 gem 'database_cleaner'
 
 gem 'nokogiri'
+
+# for deploying
+gem 'capistrano'
+gem 'rvm-capistrano'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

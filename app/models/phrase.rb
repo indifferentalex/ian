@@ -26,6 +26,8 @@ class Phrase
 			end
 		end
 
+		puts parole.to_s
+
 		self.soggetti = []
 		self.predicati = []
 		self.complementi = []

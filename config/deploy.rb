@@ -2,7 +2,7 @@ require "bundler/capistrano"
 require "rvm/capistrano"
 # require "sidekiq/capistrano"
 
-server "82.196.4.124", :web, :app, :db, primary: true
+server "37.139.25.117", :web, :app, :db, primary: true
 
 set :application, "ian"
 set :user, "deployer"
@@ -14,7 +14,6 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "git@github.com:indifferentalex/#{application}.git"
 set :branch, "master"
-set :rvm_type, :system
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true

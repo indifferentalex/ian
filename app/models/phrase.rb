@@ -6,7 +6,7 @@ class Phrase
 		
 		self.parole = []
 
-		cmd = 'echo "' + sentence + '" | /Users/alex/development/treetaggerutf8/cmd/tree-tagger-italian-utf8'
+		cmd = 'echo "' + sentence + '" | /home/deployer/downloads/cmd/tree-tagger-italian-utf8'
 
 		value = `#{cmd}`
 

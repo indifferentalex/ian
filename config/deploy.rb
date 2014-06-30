@@ -5,8 +5,8 @@ require "rvm/capistrano"
 server "82.196.4.124", :web, :app, :db, primary: true
 
 set :application, "ian"
-set :user, "root"
-set :port, 22
+set :user, "deployer"
+set :port, 7777
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false

@@ -37,7 +37,7 @@ class Phrase
 		gruppo = Group.new
 
 		self.parole.each do |parola|
-			if parola.articolo? or parola.preposizione? # divisione obbligatoria		
+			if parola.articolo? or parola.preposizione? or parola.pdd.include?('NPR') # divisione obbligatoria		
 				if not gruppo.parole.empty?
 					if not gruppo.parole.last.articolo? and not gruppo.parole.last.preposizione?
 						if gruppo.parole.last.verbo?
@@ -89,15 +89,16 @@ class Phrase
 				else # la parola non è un verbo
 					if not gruppo.parole.empty?
 						if gruppo.parole.last.verbo?
-							if gruppo.parole.last.verbo?.infinito == 'essere' # nome del predicato, perciò sta nello stesso gruppo del verbo
-								gruppo.parole << parola
-							else # il predicato è un predicato verbale, perciò qualunque parola che non sia un verbo che viene dopo sta in un gruppo a se stante
+							# if gruppo.parole.last.verbo?.infinito == 'essere' # nome del predicato, perciò sta nello stesso gruppo del verbo
+								# no, questo comportamento è stato cambiato, il nome del predicato sta in un gruppo da solo all'inizio
+								# gruppo.parole << parola
+							# else # il predicato è un predicato verbale, perciò qualunque parola che non sia un verbo che viene dopo sta in un gruppo a se stante
 								self.gruppi << gruppo
 
 								gruppo = Group.new
 
 								gruppo.parole << parola
-							end
+							# end
 						else
 							gruppo.parole << parola
 						end
@@ -298,9 +299,13 @@ class Phrase
 				end
 
 				if self.soggetti.empty? # nessun soggetto prima del predicato, controlliamo dopo
-					self.gruppi.last(self.gruppi.count - indice_predicato - 1).each do |gruppo|
+					self.gruppi.last(self.gruppi.count - indice_predicato - 1).reverse_each do |gruppo|
 						# se la prima parola è un articolo oppure un sostantivo, è un ottimo candidato per essere il soggetto
-						if gruppo.parole.first.pdd.include?('DET') or gruppo.parole.first.pdd.include?('NOM') or gruppo.parole.first.pdd.include?('NPR')
+						if gruppo.parole.first.pdd.include?('DET') or gruppo.parole.first.pdd.include?('NOM') or gruppo.parole.first.pdd.include?('NPR') and self.soggetti.empty? # solo uno per ora
+							# è un ottimo candidato, ma non necessariamente il soggetto, bisogna effettuare altri controlli
+							# 1. concordanza di genere/numero con il verbo
+							# 2. "dove ha comprato le scarpe Claudia?", per il momento si risolve considerando l'ultimo gruppo candidato (essenzialmente "partire dalla fine della frase")
+
 							soggetto = Subject.new
 
 							soggetto.parole = gruppo.parole
@@ -312,7 +317,7 @@ class Phrase
 							end
 
 							if not soggetto.limma.nil?
-								soggetto.limma = soggetto.limma.parola # il limma è una stringa, lemma è una Word
+								soggetto.limma = soggetto.limma.lemma # il limma è una stringa, lemma è una Word
 							end
 
 							gruppo.tipo = 'soggetto'
@@ -381,49 +386,33 @@ class Phrase
 				if gruppo.tipo.nil? # non sono ancora stati analizzati quindi, ne soggetto ne predicato
 					if gruppo.complemento_di_luogo?
 						gruppo.tipo = 'luogo'
-
-						complemento = Complement.new(gruppo.parole, gruppo.tipo, gruppo.limma)
-
-						self.complementi << complemento
 					elsif gruppo.complemento_di_tempo?
 						gruppo.tipo = 'tempo'
-
-						complemento = Complement.new(gruppo.parole, gruppo.tipo, gruppo.limma)
-
-						self.complementi << complemento
 					elsif gruppo.complemento_di_specificazione?
-						gruppo.tipo = 'specificazione'
-
-						complemento = Complement.new(gruppo.parole, gruppo.tipo, gruppo.limma)
-
-						self.complementi << complemento		
+						gruppo.tipo = 'specificazione'		
 					elsif gruppo.complemento_di_agente?
-						gruppo.tipo = 'agente'
-
-						complemento = Complement.new(gruppo.parole, gruppo.tipo, gruppo.limma)
-
-						self.complementi << complemento	
-					elsif self.predicati.first.tipo == 'verbale'
-						begin
-							if gruppi[i - 1].tipo == 'predicato' and gruppi[i].complemento_oggetto?
-								gruppo.tipo = 'oggetto'
-
-								complemento = Complement.new(gruppo.parole, gruppo.tipo, gruppo.limma)
-
-								self.complementi << complemento
-							end							
-						rescue 
-							# might go out of bounds on that index, better to try/catch than testing index?
-						end
+						gruppo.tipo = 'agente'	
+					elsif self.predicati.first.tipo == 'verbale' && (i > 0) && (gruppi[i - 1].tipo == 'predicato') && gruppi[i].complemento_oggetto?
+						gruppo.tipo = 'oggetto'					
 					else
 						# per far portare i test dove 'complemento x è y', anche i gruppi per le quali non si trova un complemento devono "crearlo" il complemento
 						# è molto importante i casi di test del tipo 'complemento x è y' perché il numero di complementi porta nel caso dello stesso numero di gruppi
-						gruppo.tipo = 'nessuno'
-
-						complemento = Complement.new(gruppo.parole, gruppo.tipo, gruppo.limma)
-
-						self.complementi << complemento		
+						gruppo.tipo = 'nessuno'		
 					end
+					
+					gruppo.limma = gruppo.parole.select { |parola| parola.pdd.include?('NOM') }.first
+
+					if gruppo.limma.nil? # allora è un nome proprio
+						gruppo.limma = gruppo.parole.select { |parola| parola.pdd.include?('NPR') }.first
+					end
+
+					if not gruppo.limma.nil?
+						gruppo.limma = gruppo.limma.lemma # il limma è una stringa, lemma è una Word
+					end
+
+					complemento = Complement.new(gruppo.parole, gruppo.tipo, gruppo.limma)
+
+					self.complementi << complemento
 				end
 			end
 		end		

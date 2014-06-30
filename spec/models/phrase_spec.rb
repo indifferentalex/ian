@@ -560,4 +560,48 @@ describe Phrase do
       expect(frase.complementi.count).to eq(0)
     end
   end
+
+  context "Claudia ha visto un film al cinema" do
+    frase = Phrase.new("Claudia ha visto un film al cinema")
+
+    frase.raggruppa_parole
+
+    frase.trova_predicati
+
+    frase.trova_soggetti
+
+    frase.trova_complementi
+
+    it "ha 7 parole" do
+      expect(frase.parole.count).to eq(7)
+    end
+
+    it "ha 4 gruppi grammaticali" do
+      expect(frase.gruppi.count).to eq(4)
+    end 
+
+    it "ha come predicato <<ha visto>>" do
+      expect(frase.predicati.first.ugualianza_parole("ha visto")).to eq(true)
+    end
+
+    it "ha un predicato verbale" do
+      expect(frase.predicati.first.tipo).to eq('verbale')
+    end
+
+    it "ha come soggetto <<Claudia>>" do
+      expect(frase.soggetti.first.ugualianza_parole("Claudia")).to eq(true)
+    end
+
+    it "ha 2 complementi" do
+      expect(frase.complementi.count).to eq(2)
+    end
+
+    it "ha come primo complemento un complemento oggetto" do
+      expect(frase.complementi[0].tipo).to eq('oggetto')
+    end
+
+    it "ha come secondo complemento un complemento di luogo" do
+      expect(frase.complementi[1].tipo).to eq('luogo')
+    end
+  end
 end

@@ -26,7 +26,7 @@ class Group
 
 						# controlliamo se è un luogo
 						Action.all.each do |azione|
-							if azione.conferma?(soggetto, predicato)
+							if azione.conferma?(soggetto, predicato, [])
 								return true
 							end
 						end
@@ -36,7 +36,7 @@ class Group
 
 						# controlliamo se è un luogo
 						Action.all.each do |azione|
-							if azione.conferma?(soggetto, predicato)
+							if azione.conferma?(soggetto, predicato, [])
 								return true
 							end
 						end
@@ -67,7 +67,7 @@ class Group
 
 						# controlliamo se è un luogo
 						Action.all.each do |azione|
-							if azione.conferma?(soggetto, predicato)
+							if azione.conferma?(soggetto, predicato, [])
 								return true
 							end
 						end
@@ -105,7 +105,7 @@ class Group
 
 						# controlliamo se è un luogo
 						Action.all.each do |azione|
-							if azione.conferma?(soggetto, predicato)
+							if azione.conferma?(soggetto, predicato, [])
 								return true
 							end
 						end

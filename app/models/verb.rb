@@ -1,6 +1,6 @@
 class Verb < ActiveRecord::Base
 	def == parola
-		if [infinito, prima_persona_singolare, seconda_persona_singolare, terza_persona_singolare, prima_persona_plurale, seconda_persona_plurale, terza_persona_plurale, participio_passato, participio_passato.gsub(/.$/, 'a')].include? parola
+		if [infinito, prima_persona_singolare, seconda_persona_singolare, terza_persona_singolare, prima_persona_plurale, seconda_persona_plurale, terza_persona_plurale, participio_passato.split(',').first, participio_passato.split(',').first.gsub(/.$/, 'a')].include? parola # split(',').first perché alcune hanno come part. pass. "visto/veduto"
 			true
 		else
 			false

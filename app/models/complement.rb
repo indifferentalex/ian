@@ -6,4 +6,16 @@ class Complement
 		self.tipo = t
 		self.lemma = l
 	end
+
+  def == complemento
+    if self.lemma == complemento.lemma && self.tipo == complemento.tipo
+    	true
+    else
+    	false
+    end
+  end
+
+  def testo
+    self.parole.map { |p| p.parola }.join(' ')
+  end
 end

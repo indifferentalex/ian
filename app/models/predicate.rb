@@ -29,7 +29,7 @@ class Predicate
 				if !(p.pdd.include? 'VER')
 					self.nome_del_predicato << p
 
-					if (p.pdd.include? 'NOM') || (p.pdd.include? 'ADJ') # ci potrebbero stare entrambi, soluzione solo per ora
+					if (p.pdd.include? 'NOM') || (p.pdd.include? 'ADJ') || (p.pdd.include? 'NPR') # ci potrebbero stare entrambi, soluzione solo per ora
 						self.limma_nome_del_predicato = p.lemma
 					end
 				end
@@ -41,7 +41,7 @@ class Predicate
 				parole_nome_del_predicato.shift
 			end
 
-			self.limma_nome_del_predicato = parole_nome_del_predicato.map { |word| word.parola }.join(" ") # tutto meno l'articolo
+			self.limma_nome_del_predicato = parole_nome_del_predicato.map { |word| word.lemma }.join(" ") # tutto meno l'articolo
 		else
 			nil
 		end

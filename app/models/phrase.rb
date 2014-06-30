@@ -12,6 +12,8 @@ class Phrase
 
 		result = value.split
 
+		puts result
+
 		result.each_with_index do |row, i|
 			if i % 3 == 2 # third element
 				if result[i] == '@card@' # in modo che i numeri hanno come lemma il numero

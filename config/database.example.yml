@@ -21,7 +21,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: ian_production
+  database: ian_prod
   pool: 5
-  username: ian
-  password: 
+  username: deployer
+  password: ai

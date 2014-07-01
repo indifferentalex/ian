@@ -30,6 +30,12 @@ class Phrase
 
 		puts parole.to_s
 
+		self.parole.each do |p|
+			if p.pdd.include?('VER')
+				Verb.carica_coniugazioni(p.lemma)
+			end
+		end
+
 		self.soggetti = []
 		self.predicati = []
 		self.complementi = []

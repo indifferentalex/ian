@@ -7,11 +7,15 @@ class Subject
 	end
 
   def == soggetto
-    if self.limma == soggetto.limma
-    	true
-    else
-    	false
-    end
+  	begin
+	    if self.limma == soggetto.limma
+	    	true
+	    else
+	    	false
+	    end
+	  rescue
+	  	false
+	  end
   end
 
 	def ugualianza_parole(soggetto)

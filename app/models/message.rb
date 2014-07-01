@@ -55,7 +55,7 @@ class Message < ActiveRecord::Base
 
 			answer.content = 'okay'
 		else # è una domanda
-			if @frase.soggetti.empty?
+			if @frase.soggetti.empty? && intento != 'chi'
 				# se manca il soggetto significa che viene chiesta una precisazione riguardo al messaggio precedente
 				# in pratica viene analizzato il messaggio precedente, cambiando soltanto l'intento della domanda
 				# che sarà quello determinato dalla frase senza soggetto
@@ -154,6 +154,18 @@ class Message < ActiveRecord::Base
 						if complemento_di_luogo
 							answer.content = complemento_di_luogo.testo
 						end
+					end
+				end				
+			elsif intento == 'chi'
+				answer.content = 'non lo so'
+
+				Action.all.each do |azione|
+					if azione.conferma?(nil, @frase.predicati.first, @frase.complementi)
+						azione_risposta = azione.conferma?(nil, @frase.predicati.first, @frase.complementi)
+
+						soggetto = azione_risposta.soggetto.parole.map { |p| p.parola }.join(' ')
+
+						answer.content = soggetto
 					end
 				end				
 			end

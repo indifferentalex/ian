@@ -51,7 +51,7 @@ class Action < ActiveRecord::Base
 	end
 
 	def conferma?(s, p, c)
-		if (self.soggetto == s) && (self.predicato.limma_nome_del_predicato == p.limma_nome_del_predicato) && (self.predicato.limma == p.limma)
+		if ((self.soggetto == s) || s.nil?) && (self.predicato.limma_nome_del_predicato == p.limma_nome_del_predicato) && (self.predicato.limma == p.limma)
 			if not c.empty?
 				if self.complementi_corrispondono?(c)
 					return self

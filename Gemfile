@@ -35,6 +35,7 @@ end
 
 group :production do
 	gem 'unicorn'
+	gem 'pg'
 end
 
 gem 'rspec-rails', '~> 3.0.0'

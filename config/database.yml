@@ -24,4 +24,4 @@ production:
   database: ian_production
   pool: 5
   username: ian
-  password:
+  password: 

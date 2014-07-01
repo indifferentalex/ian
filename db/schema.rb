@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140614225147) do
+ActiveRecord::Schema.define(version: 20140701004944) do
 
   create_table "actions", force: true do |t|
-    t.string   "subject"
-    t.string   "predicate"
-    t.string   "complements"
+    t.text     "subject"
+    t.text     "predicate"
+    t.text     "complements"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -41,16 +41,16 @@ class Verb < ActiveRecord::Base
 
 	# 	commando += 'soggetto = parole'
 	# 	# facciamo finta che tutto è un concetto per ora
-	# 	# 'subject = Concept.find_by_noun_id(' + soggetto.select { |parola| parola.nome? }.first.nome?.id + '); payload = ' + (payload.nil? ? ' nil; ' : 'Concept.find(' + payload.id.to_s + '); ') + self.method 
+	# 	# 'subject = Concept.find_by_noun_id(' + soggetto.select { |parola| parola.nome? }.first.nome?.id + '); payload = ' + (payload.nil? ? ' nil; ' : 'Concept.find(' + payload.id.to_s + '); ') + self.method
 	# end
 
 	def domanda(soggetto, predicato, complementi = nil)
-		
+
 	end
 
 	def self.carica_coniugazioni(verbo)
 		require 'nokogiri'
-		require 'open-uri'		
+		require 'open-uri'
 
 		if Verb.where(:infinito => verbo).first.nil? # non esiste ancora
 			begin
@@ -60,27 +60,15 @@ class Verb < ActiveRecord::Base
 
 				pagina = Nokogiri::HTML(open('http://www.wordreference.com/conj/itverbs.aspx?v=' + verbo))
 
-				i = 0
-
 				# indicativo presente
-				pagina.css('#cForm1 > td').each do |td|
-					if i == 1
-						indicativo_presente = td.to_s.split('<br>')
+				indicativo_presente = pagina.css('.aa td').first(6).map { |td| ActionView::Base.full_sanitizer.sanitize(td.to_s).gsub("\n", "") }
 
-						indicativo_presente.each_with_index do |coniugazione, i|
-							indicativo_presente[i] = ActionView::Base.full_sanitizer.sanitize(coniugazione).squish
-						end
-
-						v.prima_persona_singolare = indicativo_presente[0]
-						v.seconda_persona_singolare = indicativo_presente[1]
-						v.terza_persona_singolare = indicativo_presente[2]
-						v.prima_persona_plurale = indicativo_presente[3]
-						v.seconda_persona_plurale = indicativo_presente[4]
-						v.terza_persona_plurale = indicativo_presente[5]
-					end
-
-					i += 1
-				end
+				v.prima_persona_singolare = indicativo_presente[0]
+				v.seconda_persona_singolare = indicativo_presente[1]
+				v.terza_persona_singolare = indicativo_presente[2]
+				v.prima_persona_plurale = indicativo_presente[3]
+				v.seconda_persona_plurale = indicativo_presente[4]
+				v.terza_persona_plurale = indicativo_presente[5]
 
 				# participio passato
 				i = 0
@@ -100,31 +88,23 @@ class Verb < ActiveRecord::Base
 				end
 
 				# ausiliare (prendiamo quello usato sul passato prossimo dal sito, non è detto che non ha due ausiliari come 'cominciare')
-				i = 0
+				passato_prossimo = pagina.css('.aa td').first(30).last(6).map { |td| ActionView::Base.full_sanitizer.sanitize(td.to_s).gsub("\n", "") }
 
-				pagina.css('#cForm2 > td').each do |td|
-					if i == 1
-						passato_prossimo = td.to_s.split('<br>')
+				passato_prossimo.each_with_index do |coniugazione, i|
+					passato_prossimo[i] = ActionView::Base.full_sanitizer.sanitize(coniugazione).squish
+				end
 
-						passato_prossimo.each_with_index do |coniugazione, i|
-							passato_prossimo[i] = ActionView::Base.full_sanitizer.sanitize(coniugazione).squish
-						end
-
-						if passato_prossimo[0].split.first == 'sono'
-							v.ausiliare = 'essere'
-						else
-							v.ausiliare = 'avere'
-						end
-					end
-
-					i += 1
+				if passato_prossimo[0].split.first == 'sono'
+					v.ausiliare = 'essere'
+				else
+					v.ausiliare = 'avere'
 				end
 
 				if v.save
 					puts 'Verbo caricato'
 				else
 					puts 'Qualcosa è andato storto'
-				end	
+				end
 			rescue
 				puts 'Qualcosa è andato storto'
 			end

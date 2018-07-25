@@ -3,10 +3,10 @@ class Phrase
 
 	def initialize(sentence)
 		self.raw = sentence
-		
+
 		self.parole = []
 
-		cmd = 'echo "' + sentence + '" | /home/deployer/downloads/cmd/tree-tagger-italian-utf8' # '/Users/alex/Development/treetaggerutf8/cmd/tree-tagger-italian-utf8
+		cmd = 'echo "' + sentence + '" | /Users/alexvlasov/Code/tree-tagger/cmd/tree-tagger-italian' # /home/deployer/downloads/cmd/tree-tagger-italian-utf8' # '/Users/alex/Development/treetaggerutf8/cmd/tree-tagger-italian-utf8
 
 		value = `#{cmd}`
 
@@ -47,7 +47,7 @@ class Phrase
 		gruppo = Group.new
 
 		self.parole.each do |parola|
-			if parola.articolo? or parola.preposizione? or parola.pdd.include?('NPR') # divisione obbligatoria		
+			if parola.articolo? or parola.preposizione? or parola.pdd.include?('NPR') # divisione obbligatoria
 				if not gruppo.parole.empty?
 					if not gruppo.parole.last.articolo? and not gruppo.parole.last.preposizione?
 						if gruppo.parole.last.verbo?
@@ -65,7 +65,7 @@ class Phrase
 
 							# 		gruppo = Group.new
 
-							# 		gruppo.parole << parola								
+							# 		gruppo.parole << parola
 							# 	end
 							# end
 						else
@@ -73,7 +73,7 @@ class Phrase
 
 							gruppo = Group.new
 
-							gruppo.parole << parola		
+							gruppo.parole << parola
 						end
 					else # se la parola precedente è anch'essa un articolo/preposizione vanno insieme
 						gruppo.parole << parola
@@ -211,7 +211,7 @@ class Phrase
 	# 			else
 	# 				if c > 0
 	# 					solo_verbo_essere = true
-						
+
 	# 					predicato.parole.each do |p|
 	# 						if (p.pdd.include? 'VER') && !(p.lemma.include? 'essere')
 	# 							solo_verbo_essere = false
@@ -334,11 +334,11 @@ class Phrase
 
 							self.soggetti << soggetto
 						end
-					end						
+					end
 				end
 
 				indice_predicato
-			end	
+			end
 		end
 	end
 
@@ -365,10 +365,10 @@ class Phrase
 	# 				soggetto.limma = soggetto.parole.last.lemma
 	# 			end
 	# 		end
-	# 	end		
+	# 	end
 
 	# 	# 2. Se il soggetto non è stato trovato prima del predicato, controlliamo se sta dopo (ha mangiato il cane, è nato il bambino)
-	# 	if soggetto.parole.empty?		
+	# 	if soggetto.parole.empty?
 	# 		self.parole.each_with_index do |parola, i|
 	# 			if (parola.nome?) && (self.parole.index { |p| p == self.predicati.first.parole.first } < i) # la parola è un sostantivo e sta dopo il predicato
 	# 				# anche l'articolo se c'è
@@ -384,7 +384,7 @@ class Phrase
 	# 					soggetto.limma = soggetto.parole.last.lemma
 	# 				end
 	# 			end
-	# 		end	
+	# 		end
 	# 	end
 
 	# 	self.soggetti << soggetto # al momento solo un unico soggetto
@@ -399,17 +399,17 @@ class Phrase
 					elsif gruppo.complemento_di_tempo?
 						gruppo.tipo = 'tempo'
 					elsif gruppo.complemento_di_specificazione?
-						gruppo.tipo = 'specificazione'		
+						gruppo.tipo = 'specificazione'
 					elsif gruppo.complemento_di_agente?
-						gruppo.tipo = 'agente'	
+						gruppo.tipo = 'agente'
 					elsif self.predicati.first.tipo == 'verbale' && (i > 0) && (gruppi[i - 1].tipo == 'predicato') && gruppi[i].complemento_oggetto?
-						gruppo.tipo = 'oggetto'					
+						gruppo.tipo = 'oggetto'
 					else
 						# per far portare i test dove 'complemento x è y', anche i gruppi per le quali non si trova un complemento devono "crearlo" il complemento
 						# è molto importante i casi di test del tipo 'complemento x è y' perché il numero di complementi porta nel caso dello stesso numero di gruppi
-						gruppo.tipo = 'nessuno'		
+						gruppo.tipo = 'nessuno'
 					end
-					
+
 					gruppo.limma = gruppo.parole.select { |parola| parola.pdd.include?('NOM') }.first
 
 					if gruppo.limma.nil? # allora è un nome proprio
@@ -425,7 +425,7 @@ class Phrase
 					self.complementi << complemento
 				end
 			end
-		end		
+		end
 	end
 
 	# def trova_parole_rimanenti # frase - soggetto - predicato
@@ -433,7 +433,7 @@ class Phrase
 
 	# 	parole_rimanenti.delete_if { |parola| self.soggetti.first.parole.include?(parola) || self.predicati.first.parole.include?(parola) }
 
-	# 	parole_rimanenti 
+	# 	parole_rimanenti
 	# end
 
 	# def trova_complementi
@@ -477,7 +477,7 @@ class Phrase
 	# 		self.predicati.each do |predicato|
 	# 			soggetto = self.soggetti.first
 
-			
+
 	# 		end
 	# 	end
 	# end

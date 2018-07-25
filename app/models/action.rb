@@ -19,7 +19,7 @@ class Action < ActiveRecord::Base
 				complement["tipo"],
 				complement["lemma"])
 
-			risultato << complemento			
+			risultato << complemento
 		end
 
 		risultato

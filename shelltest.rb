@@ -1,6 +1,6 @@
 sentence = 'i cani sono verdi.'
 
-cmd = "echo '" + sentence + "' | /Users/alex/development/treetagger/cmd/tree-tagger-italian"
+cmd = "echo '" + sentence + "' | /Users/alexvlasov/Code/tree-tagger/cmd/tree-tagger-italian" # /Users/alex/development/treetagger/cmd/tree-tagger-italian"
 
 value = `#{cmd}`
 

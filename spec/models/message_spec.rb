@@ -88,7 +88,7 @@ describe Message do
 			it "risponde con <<okay>>" do
 				expect(risposta).to eq("okay")
 			end
-		end		
+		end
 	end
 
 	context "il gelsomino è un fiore" do

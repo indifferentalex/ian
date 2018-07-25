@@ -45,9 +45,11 @@ gem 'database_cleaner'
 
 gem 'nokogiri'
 
+gem 'pry-rails'
+
 # for deploying
-gem 'capistrano'
-gem 'rvm-capistrano'
+# gem 'capistrano'
+# gem 'rvm-capistrano'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

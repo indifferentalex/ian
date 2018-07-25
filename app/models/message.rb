@@ -16,11 +16,11 @@ class Message < ActiveRecord::Base
 			elsif content.include? 'quando'
 				intento = 'quando'
 
-				self.content.slice! 'quando'	
+				self.content.slice! 'quando'
 			elsif content.include? 'chi'
 				intento = 'chi'
 
-				self.content.slice! 'chi'				
+				self.content.slice! 'chi'
 			else
 				intento = 'conferma'
 			end
@@ -68,7 +68,7 @@ class Message < ActiveRecord::Base
 					elsif messaggio_precedente.include? 'dove'
 						messaggio_precedente.slice! 'dove'
 					elsif messaggio_precedente.include? 'quando'
-						messaggio_precedente.slice! 'quando'				
+						messaggio_precedente.slice! 'quando'
 					end
 
 					messaggio_precedente.chop! # rimuoviamo il '?'
@@ -112,7 +112,7 @@ class Message < ActiveRecord::Base
 							answer.content = complemento_oggetto.testo
 						end
 					end
-				end		
+				end
 
 				# if @frase.soggetti.first.lemma.nome?
 				# 	Action.all.each do |azione|
@@ -141,7 +141,7 @@ class Message < ActiveRecord::Base
 							answer.content = complemento_di_luogo.testo
 						end
 					end
-				end	
+				end
 			elsif intento == 'quando'
 				answer.content = 'non lo so'
 
@@ -155,7 +155,7 @@ class Message < ActiveRecord::Base
 							answer.content = complemento_di_luogo.testo
 						end
 					end
-				end				
+				end
 			elsif intento == 'chi'
 				answer.content = 'non lo so'
 
@@ -167,7 +167,7 @@ class Message < ActiveRecord::Base
 
 						answer.content = soggetto
 					end
-				end				
+				end
 			end
 		end
 
@@ -185,7 +185,7 @@ class Message < ActiveRecord::Base
 
 		# if @frase.predicati.first.tipo == 'nominale'
 		# 	@frase.predicati.first.trova_nome_del_predicato
-			
+
 		# 	answer.content += 'Nome del predicato con limma ' + @frase.predicati.first.limma_nome_del_predicato + ': ' + @frase.predicati.first.nome_del_predicato.to_s
 
 		# 	@frase.esegui
@@ -202,7 +202,7 @@ class Message < ActiveRecord::Base
 
 		# 	if @frase.predicati.first.tipo == 'nominale'
 		# 		@frase.intento = 'verità'
-				
+
 		# 		# qui ci va il contorollo se il nome del predicato è un aggettivo o un nome
 		# 		if @frase.trova_nome_del_predicato.nome? # these should go in a variable
 		# 			answer.content += 'nome'

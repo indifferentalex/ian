@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe Phrase do
+  Verb.all.each do |v| v.destroy end
+
   context "il cane ha mangiato i fiori" do
   	frase = Phrase.new("il cane ha mangiato i fiori")
 
@@ -18,7 +20,7 @@ describe Phrase do
 
     it "ha 3 gruppi grammaticali" do
     	expect(frase.gruppi.count).to eq(3)
- 		end	
+ 		end
 
     it "ha un predicato verbale" do
       expect(frase.predicati.first.tipo).to eq('verbale')
@@ -48,7 +50,7 @@ describe Phrase do
 
     it "ha 2 gruppi grammaticali" do
     	expect(frase.gruppi.count).to eq(2)
- 		end	
+ 		end
 
     it "ha come predicato <<è morto>>" do
     	expect(frase.predicati.first.ugualianza_parole("è morto")).to eq(true)
@@ -74,7 +76,7 @@ describe Phrase do
 
     it "ha 2 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(2)
-    end 
+    end
 
     it "ha un predicato verbale" do
       expect(frase.predicati.first.tipo).to eq('verbale')
@@ -104,7 +106,7 @@ describe Phrase do
 
     it "ha 2 gruppi grammaticali" do
     	expect(frase.gruppi.count).to eq(2)
- 		end	
+ 		end
 
     it "ha un predicato verbale" do
       expect(frase.predicati.first.tipo).to eq('verbale')
@@ -134,7 +136,7 @@ describe Phrase do
 
     it "ha 2 gruppi grammaticali" do
     	expect(frase.gruppi.count).to eq(2)
- 		end	
+ 		end
 
     it "ha un predicato nominale" do
       expect(frase.predicati.first.tipo).to eq('nominale')
@@ -166,7 +168,7 @@ describe Phrase do
 
     it "ha 3 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(3)
-    end 
+    end
 
     it "ha come predicato <<è cominciata>>" do
       expect(frase.predicati.first.ugualianza_parole("è cominciata")).to eq(true)
@@ -198,7 +200,7 @@ describe Phrase do
 
     it "ha 2 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(2)
-    end 
+    end
 
     it "ha come predicato <<è una grande città>>" do
       expect(frase.predicati.first.ugualianza_parole("è una grande città")).to eq(true)
@@ -234,7 +236,7 @@ describe Phrase do
 
     it "ha 3 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(3)
-    end 
+    end
 
     it "ha come predicato <<è andata>>" do
       expect(frase.predicati.first.ugualianza_parole("è andata")).to eq(true)
@@ -270,7 +272,7 @@ describe Phrase do
 
     it "ha 3 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(3)
-    end 
+    end
 
     it "ha come predicato <<è passata>>" do
       expect(frase.predicati.first.ugualianza_parole("è passata")).to eq(true)
@@ -302,7 +304,7 @@ describe Phrase do
 
     it "ha 4 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(4)
-    end 
+    end
 
     it "ha come predicato <<è andata>>" do
       expect(frase.predicati.first.ugualianza_parole("è andata")).to eq(true)
@@ -334,7 +336,7 @@ describe Phrase do
 
     it "ha 4 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(4)
-    end 
+    end
 
     it "ha come predicato <<è nato>>" do
       expect(frase.predicati.first.ugualianza_parole("è nato")).to eq(true)
@@ -374,7 +376,7 @@ describe Phrase do
 
     it "ha 4 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(4)
-    end 
+    end
 
     it "ha come predicato <<è andata>>" do
       expect(frase.predicati.first.ugualianza_parole("è andata")).to eq(true)
@@ -418,7 +420,7 @@ describe Phrase do
 
     it "ha 3 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(3)
-    end 
+    end
 
     it "ha come predicato <<sono stati mangiati>>" do
       expect(frase.predicati.first.ugualianza_parole("sono stati mangiati")).to eq(true)
@@ -458,7 +460,7 @@ describe Phrase do
 
     it "ha 3 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(3)
-    end 
+    end
 
     it "ha come predicato <<sta>>" do
       expect(frase.predicati.first.ugualianza_parole("sta")).to eq(true)
@@ -498,7 +500,7 @@ describe Phrase do
 
     it "ha 4 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(4)
-    end 
+    end
 
     it "ha come predicato <<ha mangiato>>" do
       expect(frase.predicati.first.ugualianza_parole("ha mangiato")).to eq(true)
@@ -542,7 +544,7 @@ describe Phrase do
 
     it "ha 2 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(2)
-    end 
+    end
 
     it "ha come predicato <<è un periodo di tempo>>" do
       expect(frase.predicati.first.ugualianza_parole("è un periodo di tempo")).to eq(true)
@@ -578,7 +580,7 @@ describe Phrase do
 
     it "ha 4 gruppi grammaticali" do
       expect(frase.gruppi.count).to eq(4)
-    end 
+    end
 
     it "ha come predicato <<ha visto>>" do
       expect(frase.predicati.first.ugualianza_parole("ha visto")).to eq(true)
